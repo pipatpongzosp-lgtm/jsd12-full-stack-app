@@ -2,8 +2,8 @@ import e from "express";
 import cors from "cors";
 
 import { users } from "./mockData/fakeUsers.js";
-import { router as apiRoutes } from "./routes/v1/index.js"
-
+import { router as apiRoutes } from "./routes/index.js"
+import { connectDB } from "./config/mongoDB.js";
 
 const app = e();
 const PORT = 3000;
@@ -47,7 +47,7 @@ app.get("/", (req, res) => {
 
 app.use("/api",apiRoutes)
 
-
+await connectDB();
 // // app.delete();
 
 app.listen(PORT, () => {
