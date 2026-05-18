@@ -2,8 +2,9 @@ import e from "express";
 import cors from "cors";
 
 import { users } from "./mockData/fakeUsers.js";
-import { router as apiRoutes } from "./routes/index.js"
+import { router as apiRoutes } from "./routes/index.js";
 import { connectDB } from "./config/mongoDB.js";
+import {connectSupabase} from "./config/supabase.js";
 
 const app = e();
 const PORT = 3000;
@@ -12,7 +13,7 @@ app.use(cors());
 app.use(e.json());
 
 app.get("/", (req, res) => {
-  //.send = generic senfd
+  //.send = generic send
   res.send(`<!doctype html>
   <html lang="en">
     <head>
@@ -48,8 +49,10 @@ app.get("/", (req, res) => {
 app.use("/api",apiRoutes)
 
 await connectDB();
+await connectSupabase();
+
 // // app.delete();
 
 app.listen(PORT, () => {
-  console.log(`Sever running on PORT:${PORT}💠🌐🔰🟢`);
+  console.log(`Sever running on PORT:${PORT}🌐🟢`);
 });

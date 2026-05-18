@@ -6,9 +6,9 @@ POST http://localhost:3000/api/v2/user
 Content-Type: application/json
 
 {
-    "username": "saturn",
-    "email":" sadn@example.com",
-    "password": "126555524485",
+    "username": "sanddy",
+    "email":" dream@example.com",
+    "password": "2ghj8llda",
     "role":"admin"
   
 }
@@ -24,12 +24,12 @@ Content-Type: application/json
 # }
 
 ### Delete user
-DELETE http://localhost:3000/api/v2/user/
-Content-Type: application/json
+# DELETE http://localhost:3000/api/v2/user/
+# Content-Type: application/json
 
-{
-    "username": "null",
-    "email":"null",
-    "password": "null",
-    "role": "null"
-}
+# {
+#     "username": "null",
+#     "email":"null",
+#     "password": "null",
+#     "role": "null"
+# }
