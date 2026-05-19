@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { users } from "../../mockData/fakeUsers.js";
 
+
 export const router = Router();
 
 //define F/E must call with get method to B/E

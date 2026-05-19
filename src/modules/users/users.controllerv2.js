@@ -1,0 +1,46 @@
+import { User } from "./user.model.js"
+
+
+export const getUsers = async (req, res, next) => {
+  try {
+    const users = await User.find();
+    return res.status(200).json({ success: true, data: users });
+  } catch (err) {
+    // return res.status(400).json({ success: false, error: error });
+    next(err);
+  }
+};
+
+export const createUsers = async (req, res,next) => {
+  const { username, email, password, role } = req.body || {}; //|| {} = if empty -> go next.
+  //role set default as "user" in user.model.js
+  if (!username || !email || !password) {
+    const err = new Error("Username, email, password are required!");
+    err.name = "ValidationError";
+    err.status = 400;
+    return res.status(400).json({ success: false, error: err }); //If error use err for show error details.
+  }
+
+  try {
+    const doc = await User.create({ username, email, password, role });
+    return res.status(201).json({ success: true, data: userResponse(doc) });
+  } catch (err) {
+    // return res.status(400).json({ success: false, error: err });
+    next(err);
+  }
+};
+
+export const deleteUsers = async (req, res,next) => {
+  try {
+    const doc = await User.findByIdAndDelete(req.params.id);
+
+    if (!doc) {
+      return res.status(404).json({ success: false, error: "User not found" });
+    }
+
+    return res.status(200).json({ success: true, data: doc });
+  } catch (err) {
+    // return res.status(400).json({ success: false, error: err });
+    next(err);
+  }
+};
