@@ -1,14 +1,14 @@
 ### Read all user
-GET http://localhost:3000/api/v2/user
+GET http://localhost:3000/api/v1/users
 
 ### Create user
-POST http://localhost:3000/api/v2/user
+POST http://localhost:3000/api/v1/users
 Content-Type: application/json
 
 {
-    "username": "jupeter",
-    "email":" susan@example.com",
-    "password": "1235212649565"
+    "username": "ju",
+    "email":" susanfsf@example.com",
+    "password": "12352sfsd12649565"
 }
 
 
@@ -21,3 +21,6 @@ Content-Type: application/json
 #     "email":" susan@example.com",
 #     "password": "1234"
 # }
+
+ ### Delete user in mockupData
+DELETE http://localhost:3000/api/v1/users/4

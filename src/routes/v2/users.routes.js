@@ -83,4 +83,9 @@ router.post("/pg", async (req, res) => {
   }
 });
 
-//rou
+router.delete("/user:id", async (req, res) => {
+  const user = users.find((u) => u.id === req.params.id);
+  delete user.id
+  console.log(user.id)
+});
+

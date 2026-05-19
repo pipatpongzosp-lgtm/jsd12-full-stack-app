@@ -1,9 +1,7 @@
 import { Router } from "express";
-import {users} from "../../mockData/fakeUsers.js"
-
+import { users } from "../../mockData/fakeUsers.js";
 
 export const router = Router();
-
 
 //define F/E must call with get method to B/E
 router.get("/", (req, res) => {
@@ -37,22 +35,28 @@ router.put("/users/:id", (req, res) => {
   //valid user who is update
   const user = users.find((u) => u.id === req.params.id);
 
-
-  if (!user){
-    return res.status(404).json({error:"User not found"})
+  if (!user) {
+    return res.status(404).json({ error: "User not found" });
   }
 
-  const {username,email,password} = req.body;
-  if (!username || !email) {return res .status(400)
-    .json({error:"username, email and password are required!"});
+  const { username, email, password } = req.body;
+  if (!username || !email) {
+    return res
+      .status(400)
+      .json({ error: "username, email and password are required!" });
   }
-
 
   user.username = username;
   user.email = email;
   user.password = password;
   res.status(200).json(user);
-  
-  
 });
+
+router.delete("/user:id", (req, res) => {
+  const user = users.find((u) => u.id === req.params.id);
+  delete user.id
+  console.log(user.id)
+});
+
+
 // app.patch();
