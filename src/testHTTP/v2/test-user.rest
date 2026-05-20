@@ -13,6 +13,17 @@ Content-Type: application/json
   
 }
 
+### Create user with hash
+POST http://localhost:3000/api/v2/user/register
+Content-Type: application/json
+
+{
+    "username": "easter",
+    "email":" easter@xmail.com",
+    "password": "easterday2026",
+    "role":"user"
+  
+}
 # ### Update user
 # PUT http://localhost:3000/api/v2/user
 # Content-Type: application/json

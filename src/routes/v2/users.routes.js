@@ -5,6 +5,7 @@ import {
   getUsers,
   createUsers,
   deleteUsers,
+  createUserResponse,
 } from "../../modules/users/users.controllerv2.js"
 
 export const router = Router();
@@ -20,6 +21,7 @@ const userResponse = (doc) => {
 router.get("/",getUsers);
 router.post("/",createUsers);
 router.delete("/:id",deleteUsers);
+router.post("/register",createUserResponse);
 
 
 

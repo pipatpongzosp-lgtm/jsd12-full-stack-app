@@ -1,5 +1,5 @@
-import { User } from "./user.model.js"
-
+import { getHashPW } from "../../../bcyrpt/bcrypt.js";
+import { User } from "./user.model.js";
 
 export const getUsers = async (req, res, next) => {
   try {
@@ -11,7 +11,7 @@ export const getUsers = async (req, res, next) => {
   }
 };
 
-export const createUsers = async (req, res,next) => {
+export const createUsers = async (req, res, next) => {
   const { username, email, password, role } = req.body || {}; //|| {} = if empty -> go next.
   //role set default as "user" in user.model.js
   if (!username || !email || !password) {
@@ -30,7 +30,7 @@ export const createUsers = async (req, res,next) => {
   }
 };
 
-export const deleteUsers = async (req, res,next) => {
+export const deleteUsers = async (req, res, next) => {
   try {
     const doc = await User.findByIdAndDelete(req.params.id);
 
@@ -41,6 +41,33 @@ export const deleteUsers = async (req, res,next) => {
     return res.status(200).json({ success: true, data: doc });
   } catch (err) {
     // return res.status(400).json({ success: false, error: err });
+    next(err);
+  }
+};
+
+// register with hash
+export const createUserResponse = async (req, res, next) => {
+  // const userReq = ({ username, email, password } = req.body || {});
+  const { username, email, password } = req.body || {};
+  const userExits = await User.findOne({ email: email, username: username });
+  if (!username || !email) {
+    console.error(`email & password requried:${err}`);
+    next(err);
+  }
+  try {
+    if (userExits) {
+      return res.status(400).json({
+        success: false,
+        error: "User accout has already exits",
+      });
+    }
+    const newHashPassword = getHashPW;
+    const doc = await User.create({ email, username, password: newHashPassword });
+    return res.status(201).json({
+      success: true,
+      data: doc,
+    });
+  } catch (err) {
     next(err);
   }
 };

@@ -62,6 +62,8 @@ app.use((err, req, res, next) => {
 await connectDB();
 await connectSupabase();
 
+
+
 // // app.delete();
 
 app.listen(PORT, () => {
