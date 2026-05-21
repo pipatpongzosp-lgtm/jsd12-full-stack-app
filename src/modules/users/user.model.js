@@ -6,11 +6,17 @@ const userSchema = new mongoose.Schema(
     role: { type: String, enum: ["user", "admin"], default: "user" },
     email: { type: String, required: true, unique: true, lowercase: true },
     password: { type: String, required: true, minlength: 8, select: false },
-    active_status:{ Boolean,} //must ?
-   
+    active_status: { Boolean }, //must ?
   },
- 
+
   { timestamps: true },
 );
-export const User = mongoose.model("User", userSchema);
+
 // console.log(userSchema);
+
+userSchema.pre("save", async function () {
+  if (!this.isModified("password")) return;
+  this.password = await bcrypt.hash(this.password, 12);
+});
+
+export const User = mongoose.model("User", userSchema);

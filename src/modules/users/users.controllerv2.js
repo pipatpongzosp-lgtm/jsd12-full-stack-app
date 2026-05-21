@@ -1,6 +1,7 @@
 import { getHashPW } from "../../../bcyrpt/bcrypt.js";
 import { User } from "./user.model.js";
 
+
 export const getUsers = async (req, res, next) => {
   try {
     const users = await User.find();
@@ -62,12 +63,45 @@ export const createUserResponse = async (req, res, next) => {
       });
     }
     const newHashPassword = getHashPW;
-    const doc = await User.create({ email, username, password: newHashPassword });
+    const doc = await User.create({
+      email,
+      username,
+      password: newHashPassword,
+    });
     return res.status(201).json({
       success: true,
       data: doc,
     });
   } catch (err) {
     next(err);
+  }
+};
+
+export const userLogin = async function login(req, res, next) {
+  const { email, password } = req.body || {};
+  const isGetUser = await User.findOne({ email, password }.select("+password"));
+  console.log(isUser);
+  if (!email || password) {
+    return res.staus(400).json({
+      success: false,
+      error: "email or password isn't reconige",
+    });
+
+    try {
+      if (!isGetUser) {
+        return res.status(201).json({ success: false, error: "nice" });
+      }
+      const isMatched = await bcrypt.compare(password, user.password);
+      if (!isMatched) {
+        return res.status(400).json({
+          success: false,
+          error: "email or password isn't correct",
+        });
+      }
+   
+
+    } catch (err) {
+      next(err);
+    }
   }
 };

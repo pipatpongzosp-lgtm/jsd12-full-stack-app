@@ -18,6 +18,5 @@ import bcrypt, { hash } from "bcrypt";
 
 export const getHashPW =  async function hashPassword(password) {
     return  await bcrypt.hash (password,12)
-    
 }
 
