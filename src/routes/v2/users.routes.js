@@ -8,7 +8,7 @@ import {
   createUserResponse,
   userLogin,
   putUsers,
-} from "../../modules/users/users.controllerv2.js";
+} from "../../modules/users/users.controllerv2.js"
 
 export const router = Router();
 
@@ -27,41 +27,6 @@ router.post("/register", createUserResponse);
 router.post("/login", userLogin);
 router.put("/user:id", putUsers);
 
-router.get("/auth/me", async (req, res, next) => {
-  try {
-    const userId = req.user.user._id;
-    const user = await User.findById(userId);
-
-    if (!user) {
-      return res.status(401).json({
-        sucess: false,
-        message: "User not found!",
-      });
-    }
-
-    return res.status(200).json({
-      sucesss: true,
-      data: {
-        _id: user._id,
-        username: user.username,
-        email: user.email,
-        role: user.role,
-      },
-    });
-  } catch (error) {
-    next(error);
-  }
-});
-router.get("/auth/google", async (req, res, next) => {
-  try {
-    return res.status(200).json({
-      sucesss: true,
-      data: req.user,
-    });
-  } catch (error) {
-    next(error);
-  }
-});
 
 // Supabase
 const PG_SELECT = "id, username, email,role, created_at, updated_at";
@@ -107,4 +72,4 @@ router.post("/pg", async (req, res) => {
 //   delete user.id
 //   console.log(user.id)
 // });
-// router.delete("/:id",
+// router.delete("/:id", 

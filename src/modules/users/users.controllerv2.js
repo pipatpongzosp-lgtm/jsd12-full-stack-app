@@ -1,7 +1,6 @@
 import { getHashPW } from "../../../bcyrpt/bcrypt.js";
 import { User } from "./user.model.js";
-import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
+
 
 export const getUsers = async (req, res, next) => {
   try {
@@ -17,7 +16,7 @@ export const createUsers = async (req, res, next) => {
   const { username, email, password, role } = req.body || {}; //|| {} = if empty -> go next.
   //role set default as "user" in user.model.js
   if (!username || !email || !password) {
-    const err = new Error("username, email, password are required!");
+    const err = new Error("Username, email, password are required!");
     err.name = "ValidationError";
     err.status = 400;
     return res.status(400).json({ success: false, error: err }); //If error use err for show error details.
@@ -79,10 +78,11 @@ export const createUserResponse = async (req, res, next) => {
         error: "User accout has already exits",
       });
     }
+    const newHashPassword = getHashPW;
     const doc = await User.create({
       email,
       username,
-      password: password,
+      password: newHashPassword,
     });
     return res.status(201).json({
       success: true,
@@ -94,49 +94,31 @@ export const createUserResponse = async (req, res, next) => {
 };
 
 export const userLogin = async function login(req, res, next) {
-  try {
-    const { email, password } = req.body || {};
-    const isGetUser = await User.findOne({ email: email }).select("+password");
+  const { email, password } = req.body || {};
+  const isGetUser = await User.findOne({ email, password }.select("+password"));
+  console.log(isUser);
+  if (!email || password) {
+    return res.staus(400).json({
+      success: false,
+      error: "email or password isn't reconige",
+    });
 
-    if (!isGetUser) {
-      return res.status(201).json({ success: false, error: "nice" });
+    try {
+      if (!isGetUser) {
+        return res.status(201).json({ success: false, error: "nice" });
+      }
+      const isMatched = await bcrypt.compare(password, user.password);
+      if (!isMatched) {
+        return res.status(400).json({
+          success: false,
+          error: "email or password isn't correct",
+        });
+      }
+   
+
+    } catch (err) {
+      next(err);
     }
-
-    const isMatched = await bcrypt.compare(password, isGetUser.password);
-    if (!isMatched) {
-      console.log(password, isGetUser.password);
-
-      return res.status(400).json({
-        success: false,
-        error: "Invalid email or password tesetsdf",
-      });
-      
-    }
-
-    const token = jwt.sign({ userId: isGetUser._id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
-    });
-    const isProd = process.env.NODE_ENV === "production";
-    res.cookie("accessToken", token, {
-      httpOnly: true,
-      secure: isProd, // only send over HTTPS in production
-      sameSite: isProd ? "none" : "lax",
-      path: "/",
-      maxAge: 60 * 60 * 1000, // 1 hour
-    });
-
-    return res.status(200).json({
-      success: true,
-      message: "Login successful!",
-      user: {
-        _id: isGetUser._id,
-        username: isGetUser.username,
-        email: isGetUser.email,
-        role: isGetUser.role,
-      },
-    });
-  } catch (err) {
-    next(err);
   }
 };
 
