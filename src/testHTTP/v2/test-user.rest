@@ -18,22 +18,20 @@ POST http://localhost:3000/api/v2/user/register
 Content-Type: application/json
 
 {
-    "username": "easter",
-    "email":" easter@xmail.com",
-    "password": "easterday2026",
+    "username": "aliba",
+    "email":"aliba@xmail.com",
+    "password": "aliba25806",
     "role":"user"
-  
+
 }
 
-### Create user with hash
+### login
 POST http://localhost:3000/api/v2/user/login
 Content-Type: application/json
 
 {
-    "username": "easter",
-    "email":" easter@xmail.com",
-    "password": "easterday2026",
-
+    "email":"aliba@xmail.com",
+    "password": "aliba25806"
 }
 
 

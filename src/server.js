@@ -5,7 +5,7 @@ import { users } from "./mockData/fakeUsers.js";
 import { router as apiRoutes } from "./routes/index.js";
 import { connectDB } from "./config/mongoDB.js";
 import {connectSupabase} from "./config/supabase.js";
-
+import cookieParser from "cookie-parser";
 const app = e();
 const PORT = 3000;
 
