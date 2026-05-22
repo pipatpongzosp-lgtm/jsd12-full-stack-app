@@ -47,6 +47,22 @@ export const deleteUsers = async (req, res, next) => {
   }
 };
 
+export const putUsers = async (req, res, next) => {
+  try {
+    const doc = await User.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    if (!doc) {
+      return res.status(404).json({ success: false, error: "User not found" });
+    }
+    return res.status(200).json({ success: true, data: doc });
+  } catch (err) {
+    // return res.status(400).json({ success: false, error: err });
+    next(err);
+  }
+}
+
+
 // register with hash
 export const createUserResponse = async (req, res, next) => {
   // const userReq = ({ username, email, password } = req.body || {});
@@ -138,3 +154,5 @@ export const auhtenUser = async (req, res, next) => {
     .status(200)
     .json({ success: true, message: "Logged out successfully." });
 };
+
+

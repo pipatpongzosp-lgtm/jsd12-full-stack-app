@@ -34,24 +34,24 @@ Content-Type: application/json
     "password": "aliba25806"
 }
 
+pu
+### Update user
+PUT http://localhost:3000/api/v2/user:
+Content-Type: application/json
 
-# ### Update user
-# PUT http://localhost:3000/api/v2/user
-# Content-Type: application/json
-
-# {
-#     "username": "Word",
-#     "email":" susan@example.com",
-#     "password": "1234"
-# }
+{
+    "username": "Word",
+    "email":" susan@example.com",
+    "password": "1234"
+}
 
 ### Delete user
-# DELETE http://localhost:3000/api/v2/user/
-# Content-Type: application/json
+DELETE http://localhost:3000/api/v2/user/
+Content-Type: application/json
 
-# {
-#     "username": "null",
-#     "email":"null",
-#     "password": "null",
-#     "role": "null"
-# }
+{
+    "username": "null",
+    "email":"null",
+    "password": "null",
+    "role": "null"
+}

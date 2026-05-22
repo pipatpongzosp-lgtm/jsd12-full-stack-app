@@ -7,6 +7,7 @@ import {
   deleteUsers,
   createUserResponse,
   userLogin,
+  putUsers,
 } from "../../modules/users/users.controllerv2.js";
 
 export const router = Router();
@@ -24,6 +25,8 @@ router.post("/", createUsers);
 router.delete("/:id", deleteUsers);
 router.post("/register", createUserResponse);
 router.post("/login", userLogin);
+router.put("/user:id", putUsers);
+
 router.get("/auth/me", async (req, res, next) => {
   try {
     const userId = req.user.user._id;
